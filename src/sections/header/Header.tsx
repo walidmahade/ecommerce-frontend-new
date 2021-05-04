@@ -32,23 +32,25 @@ export default function Header() {
         <SearchBar />
       </div>
 
-      <div className="header-child location-selector-wrap">
-        <LocationSelector />
-      </div>
+      <div className="header-child header-links">
+        <div className="header-links-child location-selector-wrap">
+          <LocationSelector />
+        </div>
 
-      <div className="header-child get-help-wrap">
-        <span className="icon">
-          <Question />
-        </span>
-        <div className="text">Help & Support</div>
-      </div>
+        <div className="header-links-child get-help-wrap">
+          <span className="icon">
+            <Question />
+          </span>
+          <div className="text">Help & Support</div>
+        </div>
 
-      <div className="header-child lang-select-wrap">
-        <LanguageSelector />
-      </div>
+        <div className="header-links-child lang-select-wrap">
+          <LanguageSelector />
+        </div>
 
-      <div className="header-child user-wrap">
-        <Button className="primary-full">Sign In</Button>
+        <div className="header-links-child user-wrap">
+          <Button className="primary-full">Sign In</Button>
+        </div>
       </div>
     </HeaderStyled>
   );

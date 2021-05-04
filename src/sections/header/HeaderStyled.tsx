@@ -19,9 +19,23 @@ export const HeaderStyled = styled.header`
   }
 
   .search-bar-wrap {
-    width: 50%;
-    max-width: 600px;
+    width: 55%;
+    max-width: 100%;
     padding-right: 15px;
+  }
+
+  .header-links {
+    margin-left: auto;
+    padding: 0;
+    justify-content: flex-end;
+    align-content: stretch;
+    align-items: stretch;
+
+    &-child {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .location-selector-wrap {
@@ -48,10 +62,12 @@ export const HeaderStyled = styled.header`
     flex-grow: 1;
     background-color: ${(props) => props.theme.primary};
     padding: 0;
+    max-width: 150px;
 
     button {
       width: 100%;
       color: #fff;
+      padding: 10px 45px;
     }
   }
 `;
