@@ -7,6 +7,8 @@ import SearchBar from "../../components/searchBar/SearchBar";
 import LocationSelector from "../../components/locationSelector/LocationSelector";
 import LanguageSelector from "../../components/languageSelector/LanguageSelector";
 import { HeaderStyled } from "./HeaderStyled";
+import { useAppDispatch } from "../../appState/hooks";
+import { toggleSidebar } from "../sidebar/SidebarSlice";
 
 const Brand = styled.div`
   font-weight: 900;
@@ -16,9 +18,18 @@ const Brand = styled.div`
 `;
 
 export default function Header() {
+  const dispatch = useAppDispatch();
+
+  const toggleSidebarState = () => {
+    dispatch(toggleSidebar());
+  };
+
   return (
     <HeaderStyled>
-      <div className="header-child menu-toggle-wrap">
+      <div
+        className="header-child menu-toggle-wrap"
+        onClick={toggleSidebarState}
+      >
         <Button className="menu-toggle btn-outline has-icon">
           <MenuToggleIcon className={"btn-icon"} />
         </Button>
