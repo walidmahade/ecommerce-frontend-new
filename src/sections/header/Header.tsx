@@ -14,7 +14,11 @@ const Brand = styled.div`
   font-weight: 900;
   font-size: 20px;
   color: ${(props) => props.theme.accent};
-  //padding: 15px 0 15px 20px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 export default function Header() {
@@ -36,7 +40,9 @@ export default function Header() {
       </div>
 
       <div className="header-child logo-wrap">
-        <Brand>SHOP</Brand>
+        <Brand>
+          <a href="/">SHOP</a>
+        </Brand>
       </div>
 
       <div className="header-child search-bar-wrap">
