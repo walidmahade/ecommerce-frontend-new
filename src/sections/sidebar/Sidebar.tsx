@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+// @ts-nocheck
+import React from "react";
 import ArrowRight from "../../images/icons/RightArrow";
 import { SidebarStyled } from "./SidebarStyled";
+import { ListItem } from "./ListItem";
+import { popularIcon } from "../../images/CDNIcons";
 
 export default function Sidebar(props: any) {
   // const sidebarLinks = useRef();
@@ -17,22 +20,18 @@ export default function Sidebar(props: any) {
   //   };
   // }, [sidebarLinks]);
 
-  const [activeMenu, setActiveMenu] = useState(0);
+  // const [activeMenu, setActiveMenu] = useState(0);
 
   return (
     <SidebarStyled>
       <ul className="level-1">
         {/*normal menu item*/}
-        <li data-cid="10" className="not-in-selection-tree unselected topLevel">
-          <img
-            className="MenuItemIcons"
-            src="https://chaldn.com/_mpimage/popular?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D13891&amp;q=low&amp;v=1&amp;m=40&amp;webp=1&amp;alpha=1"
-            alt="popular"
-          />
-          <div className="name">
-            <a href="/popular">Popular</a>
-          </div>
-        </li>
+        <ListItem
+          name={"Popular"}
+          url={"/popular"}
+          icon={popularIcon}
+          menuLevel={1}
+        />
 
         {/*normal menu item*/}
         <li data-cid="11" className="not-in-selection-tree unselected topLevel">
