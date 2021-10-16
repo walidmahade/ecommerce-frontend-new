@@ -39,3 +39,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content .left {
+  width: 60%;
+}
+
+.content .right {
+  width: 40%;
+}
