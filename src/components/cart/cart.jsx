@@ -6,6 +6,7 @@ import CartItem from "./cartItem";
 const Cart = () => {
   const cartItemCount = useSelector((state) => state.cart.count);
   const cartTotal = useSelector((state) => state.cart.total);
+  const products = useSelector((state) => state.cart.products);
 
   return (
     <div className={"cart"}>
@@ -13,13 +14,13 @@ const Cart = () => {
       <div>
         Items: <b>{cartItemCount}</b>, Total: <b>{cartTotal}$</b>
       </div>
+
       <br />
       <br />
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
+
+      {products.map((item) => (
+        <CartItem {...item} key={item.id} />
+      ))}
     </div>
   );
 };

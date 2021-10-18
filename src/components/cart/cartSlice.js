@@ -24,15 +24,45 @@ export const cartSlice = createSlice({
       }
     },
     addProductToCart: (state, action) => {
-      let x = action.payload;
-      state.count += x.quantity;
-      state.total += x.price;
-      state.products.push(x.productId);
+      let quantity = action.payload.quantity;
+      let price = action.payload.price;
+      let id = action.payload.productId;
+
+      state.count += quantity;
+      state.total += price;
+
+      let filtered_array = state.products.filter((item) => item.id === id);
+
+      if (filtered_array.length) {
+        let product = filtered_array[0];
+        product.quantity += 1;
+      } else {
+        state.products.push({ id: id, quantity: 1 });
+      }
+    },
+    removeProductFromCart: (state, action) => {
+      let { id, price } = action.payload;
+      let product = state.products.filter((item) => item.id === id)[0];
+      // adjust form cart quantity
+      state.count -= product.quantity;
+      // adjust form cart total
+      state.total -= product.quantity * price;
+
+      // remove form cart products
+      state.products.forEach((product, index) => {
+        if (product.id === id) state.products.splice(index, 1);
+      });
+      console.log(`Product with ${id} was removed from cart.`);
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount, addProductToCart } =
-  cartSlice.actions;
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  addProductToCart,
+  removeProductFromCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
