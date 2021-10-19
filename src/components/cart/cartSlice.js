@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  count: 0,
+  quantity: 0,
   total: 0,
   products: [],
 };
@@ -10,25 +10,30 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.count += 1;
+    increment: (state, action) => {
+      const { id, quantity, price } = action.payload;
+      state.quantity += quantity;
+      state.total += price;
+
+      state.products.forEach((product, index) => {
+        if (product.id === id) product.quantity += quantity;
+      });
     },
-    decrement: (state) => {
-      state.count -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      if (action.payload.target === "count") {
-        state.count += action.payload.count;
-      } else {
-        state.total += action.payload.amount;
-      }
+    decrement: (state, action) => {
+      const { id, quantity, price } = action.payload;
+      state.quantity -= quantity;
+      state.total -= price;
+
+      state.products.forEach((product, index) => {
+        if (product.id === id) product.quantity -= quantity;
+      });
     },
     addProductToCart: (state, action) => {
       let quantity = action.payload.quantity;
       let price = action.payload.price;
       let id = action.payload.productId;
 
-      state.count += quantity;
+      state.quantity += quantity;
       state.total += price;
 
       let filtered_array = state.products.filter((item) => item.id === id);
@@ -44,7 +49,7 @@ export const cartSlice = createSlice({
       let { id, price } = action.payload;
       let product = state.products.filter((item) => item.id === id)[0];
       // adjust form cart quantity
-      state.count -= product.quantity;
+      state.quantity -= product.quantity;
       // adjust form cart total
       state.total -= product.quantity * price;
 

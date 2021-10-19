@@ -1,7 +1,7 @@
 import React from "react";
 import closeIcon from "../../images/icon-close.svg";
 import PRODUCTS from "../../Data/products";
-import { removeProductFromCart } from "./cartSlice";
+import { decrement, increment, removeProductFromCart } from "./cartSlice";
 import { useDispatch } from "react-redux";
 
 const CartItem = ({ id, quantity }) => {
@@ -36,9 +36,21 @@ const CartItem = ({ id, quantity }) => {
       </div>
 
       <div className="quantity-update">
-        <button>+</button>
+        <button
+          onClick={() =>
+            dispatch(increment({ id, quantity: 1, price: target.price }))
+          }
+        >
+          +
+        </button>
         <input type="text" value={quantity} onChange={handleQuantityChange} />
-        <button>-</button>
+        <button
+          onClick={() =>
+            dispatch(decrement({ id, quantity: 1, price: target.price }))
+          }
+        >
+          -
+        </button>
       </div>
 
       <div className="remove-form-cart" onClick={handleRemoveProductFomCart}>
