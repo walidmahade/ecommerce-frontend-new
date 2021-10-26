@@ -30,14 +30,12 @@ export const cartSlice = createSlice({
       let quantity = action.payload.quantity;
       let price = action.payload.price;
       let id = action.payload.productId;
+      let product = state.products.filter((item) => item.id === id)[0];
 
       state.quantity += quantity;
       state.total += price;
 
-      let filtered_array = state.products.filter((item) => item.id === id);
-
-      if (filtered_array.length) {
-        let product = filtered_array[0];
+      if (product) {
         product.quantity += 1;
       } else {
         state.products.push({ id: id, quantity: 1 });
@@ -50,12 +48,10 @@ export const cartSlice = createSlice({
       state.quantity -= product.quantity;
       // adjust form cart total
       state.total -= product.quantity * price;
-
       // remove form cart products
       state.products.forEach((product, index) => {
         if (product.id === id) state.products.splice(index, 1);
       });
-      console.log(`Product with ${id} was removed from cart.`);
     },
   },
 });
