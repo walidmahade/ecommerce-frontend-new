@@ -14,19 +14,17 @@ export const cartSlice = createSlice({
       const { id, quantity, price } = action.payload;
       state.quantity += quantity;
       state.total += price;
-
-      state.products.forEach((product, index) => {
-        if (product.id === id) product.quantity += quantity;
-      });
+      let product = state.products.filter((item) => item.id === id)[0];
+      product.quantity += quantity;
     },
     decrement: (state, action) => {
       const { id, quantity, price } = action.payload;
-      state.quantity -= quantity;
-      state.total -= price;
-
-      state.products.forEach((product, index) => {
-        if (product.id === id) product.quantity -= quantity;
-      });
+      let product = state.products.filter((item) => item.id === id)[0];
+      if (product.quantity > 1) {
+        state.quantity -= quantity;
+        state.total -= price;
+        product.quantity -= quantity;
+      }
     },
     addProductToCart: (state, action) => {
       let quantity = action.payload.quantity;
