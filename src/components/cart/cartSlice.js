@@ -53,6 +53,17 @@ export const cartSlice = createSlice({
         if (product.id === id) state.products.splice(index, 1);
       });
     },
+    updateQuantityAndPrice: (state, action) => {
+      const { id, newQuantity, price } = action.payload;
+      // get product
+      let product = state.products.filter((item) => item.id === id)[0];
+      // remove old quantity & add new
+      state.quantity -= Number(product.quantity);
+      state.quantity += newQuantity;
+      // remove old price and add new
+      state.total -= product.quantity * price;
+      state.total += newQuantity * price;
+    },
   },
 });
 
@@ -62,6 +73,7 @@ export const {
   incrementByAmount,
   addProductToCart,
   removeProductFromCart,
+  updateQuantityAndPrice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

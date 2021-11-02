@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import closeIcon from "../../images/icon-close.svg";
 import PRODUCTS from "../../Data/products";
-import { decrement, increment, removeProductFromCart } from "./cartSlice";
+import {
+  decrement,
+  increment,
+  removeProductFromCart,
+  updateQuantityAndPrice,
+} from "./cartSlice";
 import { useDispatch } from "react-redux";
 
 const CartItem = ({ id, quantity }) => {
   const dispatch = useDispatch();
+
   // get product
   const getProductById = PRODUCTS.filter((item) => item.id === id);
-  let target = getProductById[0];
+  let targetProduct = getProductById[0];
 
-  const handleQuantityChange = () => {
+  const handleQuantityChange = (e) => {
     console.log(`Update quantity`);
+    let newQuantity = Number(e.target.value);
+    dispatch(
+      updateQuantityAndPrice({ id, newQuantity, price: targetProduct.price })
+    );
+  };
+
+  const handleQuantityIncrease = () => {
+    dispatch(increment({ id, quantity: 1, price: targetProduct.price }));
+  };
+
+  const handleQuantityDecrease = () => {
+    dispatch(decrement({ id, quantity: 1, price: targetProduct.price }));
   };
 
   const handleRemoveProductFomCart = () => {
-    console.log(`Product with ${id} was removed from cart.`);
-    dispatch(removeProductFromCart({ id, price: target.price }));
+    dispatch(removeProductFromCart({ id, price: targetProduct.price }));
   };
 
   return (
@@ -25,32 +42,24 @@ const CartItem = ({ id, quantity }) => {
         <img
           height={70}
           width={"auto"}
-          src={target.featured_img}
+          src={targetProduct.featured_img}
           alt="prod-img"
         />
       </div>
 
       <div className="info">
-        <div className="title">{target.title}</div>
-        <div className="price">{target.price}</div>
+        <div className="title">{targetProduct.title}</div>
+        <div className="price">{targetProduct.price}</div>
       </div>
 
       <div className="quantity-update">
-        <button
-          onClick={() =>
-            dispatch(increment({ id, quantity: 1, price: target.price }))
-          }
-        >
-          +
-        </button>
-        <input type="text" value={quantity} onChange={handleQuantityChange} />
-        <button
-          onClick={() =>
-            dispatch(decrement({ id, quantity: 1, price: target.price }))
-          }
-        >
-          -
-        </button>
+        <button onClick={() => handleQuantityIncrease()}>+</button>
+        <input
+          type="text"
+          value={quantity}
+          onChange={(e) => handleQuantityChange(e)}
+        />
+        <button onClick={() => handleQuantityDecrease()}>-</button>
       </div>
 
       <div className="remove-form-cart" onClick={handleRemoveProductFomCart}>
